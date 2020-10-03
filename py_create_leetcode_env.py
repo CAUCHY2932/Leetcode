@@ -26,22 +26,27 @@ def main():
 
 
 def input_and_analyse():
-    num = input("please input the leetcode num:\n").strip()
-    if num == "":
-        print("invalid, num")
-        logging.debug("invalid num")
-        exit
+    num = input("please input the leetcode num:\n") # python2和python3不同
+    if type(num) == type(0):
+        print("num")
+        return str(num)
     else:
-        logging.debug("have input num: {}".format(num))
-        return num
+        num = num.strip()
+        if num == "":
+            print("invalid, num")
+            logging.debug("invalid num")
+            exit
+        else:
+            logging.debug("have input num: {}".format(num))
+            return num
 
 
 def create_code_env(num):
+    print("-"*10+"have input ", num)
     logging.debug("is create code env...")
     mkdir(folder_name=os.path.join("./src", "leetcode{}".format(num)))
     touch_file(filename="./src/leetcode{}/leetcode{}.go".format(num, num),
-               content=FILE_HEADER.format(num)
-               )
+               content=FILE_HEADER.format(num))
     touch_file(filename="./src/leetcode{}/leetcode{}_test.go".format(num, num),
                content=FILE_HEADER.format(num))
     pass

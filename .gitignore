@@ -18,3 +18,5 @@
 .vscode
 *.log
 tmp_workspace/
+go.sum
+go.mod
