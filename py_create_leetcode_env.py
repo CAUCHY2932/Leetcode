@@ -1,7 +1,16 @@
 # coding:utf-8
 
 import os
+import sys
 import logging
+
+
+# get current file path
+
+# dirname, filename = os.path.split(os.path.abspath(sys.argv[0]))
+# os.path.realpath(sys.argv[0]) # current file path
+
+dirname, _ = os.path.split(os.path.abspath(sys.argv[0]))
 
 # config area
 
@@ -29,7 +38,7 @@ def input_and_analyse():
     num = input("please input the leetcode num:\n") # python2和python3不同
     if type(num) == type(0):
         print("num")
-        return str(num)
+        return str(num).zfill(4)
     else:
         num = num.strip()
         if num == "":
@@ -38,13 +47,15 @@ def input_and_analyse():
             exit
         else:
             logging.debug("have input num: {}".format(num))
-            return num
+            return num.zfill(4)
 
 
 def create_code_env(num):
     print("-"*10+"have input ", num)
     logging.debug("is create code env...")
-    mkdir(folder_name=os.path.join("./src", "leetcode{}".format(num)))
+    logging.debug("change dir of %s..."%dirname)
+    os.chdir(dirname)
+    mkdir(folder_name=os.path.join("%s/src"%dirname, "leetcode{}".format(num)))
     touch_file(filename="./src/leetcode{}/leetcode{}.go".format(num, num),
                content=FILE_HEADER.format(num))
     touch_file(filename="./src/leetcode{}/leetcode{}_test.go".format(num, num),
